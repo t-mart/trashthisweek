@@ -114,11 +114,11 @@
 	}
 
 	.trash {
-		color: #166534;
+		color: green;
 	}
 
 	.recycling {
-		color: #1e40af;
+		color: blue;
 	}
 
 	@media (prefers-color-scheme: dark) {
@@ -128,11 +128,11 @@
 		}
 
 		.trash {
-			color: #15803d;
+			color: #27ac29;
 		}
 
 		.recycling {
-			color: #1d4ed8;
+			color: #3e92ff;
 		}
 	}
 
