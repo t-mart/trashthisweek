@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import dayjs from 'dayjs';
-	import calendar from 'dayjs/plugin/calendar';
-	import advancedFormat from 'dayjs/plugin/advancedFormat';
-	import utc from 'dayjs/plugin/utc';
-	import timezone from 'dayjs/plugin/timezone';
+	import calendar from 'dayjs/plugin/calendar.js';
+	import advancedFormat from 'dayjs/plugin/advancedFormat.js';
+	import utc from 'dayjs/plugin/utc.js';
+	import timezone from 'dayjs/plugin/timezone.js';
 
 	dayjs.extend(calendar); // gives a date relative to another (tomorrow/today/etc)
 	dayjs.extend(advancedFormat); // gives ordinal formatting like 1st/2nd/3rd
