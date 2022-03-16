@@ -108,22 +108,36 @@
 {/if}
 
 <style>
-	@media (prefers-color-scheme: dark) {
-		:global(body) {
-			background-color: black;
-			color: white;
-		}
+	:global(body) {
+		color: #18181b;
+		background-color: #fafafa;
 	}
+
 	.trash {
-		color: green;
+		color: #166534;
 	}
 
 	.recycling {
-		color: blue;
+		color: #1e40af;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(body) {
+			background-color: #18181b;
+			color: #fafafa;
+		}
+
+		.trash {
+			color: #15803d;
+		}
+
+		.recycling {
+			color: #1d4ed8;
+		}
 	}
 
 	.remind {
 		font-style: italic;
-		color: gray;
+		color: #71717a;
 	}
 </style>
