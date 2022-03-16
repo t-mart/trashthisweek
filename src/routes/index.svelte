@@ -75,7 +75,7 @@
 	$: nextPickup = getNextPickup(now); // updates reactively when `now` updates
 
 	onMount(() => {
-		const updateIntervalMilliseconds = 1000; // 1 minute
+		const updateIntervalMilliseconds = 1000 * 60; // 1 minute
 		const updateIntervalId = setInterval(() => {
 			now = getNow();
 		}, updateIntervalMilliseconds);
