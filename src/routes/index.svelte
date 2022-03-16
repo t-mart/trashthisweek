@@ -70,10 +70,12 @@
 		return dayjs();
 	}
 
+	// set now initially
 	let now = getNow();
 
-	$: nextPickup = getNextPickup(now); // updates reactively when `now` updates
-
+	// and also set it to update on an interval
+	// this may be overkill, but i don't want a cached version stuck on someone's phone
+	// browser to show out of date pickup data.
 	onMount(() => {
 		const updateIntervalMilliseconds = 1000 * 60; // 1 minute
 		const updateIntervalId = setInterval(() => {
@@ -84,6 +86,8 @@
 			clearInterval(updateIntervalId);
 		};
 	});
+
+	$: nextPickup = getNextPickup(now); // update reactively when `now` updates
 </script>
 
 <svelte:head>
