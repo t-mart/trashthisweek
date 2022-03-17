@@ -71,7 +71,7 @@
 	}
 
 	// set now initially
-	let now = getNow();
+	$: now = getNow();
 
 	// and also set it to update on an interval
 	// this may be overkill, but i don't want a cached version stuck on someone's phone
