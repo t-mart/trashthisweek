@@ -33,7 +33,7 @@
   onMount(() => {
     const updateIntervalMilliseconds = 1000 * 60; // 1 minute
     const updateIntervalId = setInterval(() => {
-      fromDate = dayjs()
+      fromDate = dayjs();
     }, updateIntervalMilliseconds);
 
     return () => {
@@ -54,50 +54,31 @@ Display information about the next trash pickup
   <title>Trash This Week</title>
 </svelte:head>
 
-<p>
-  {pickupDateInRelativeFormat}, is
-  {#if nextPickup.isRecyclingDay}
-    <span class="trash">trash</span> and <span class="recycling">recycling</span>.
-  {:else}
-    just <span class="trash">trash</span>.
-  {/if}
-</p>
+<div>
+  <p class="pickup">
+    {pickupDateInRelativeFormat}, is
+    {#if nextPickup.isRecyclingDay}
+      <span class="trash">trash</span> and <span class="recycling">recycling</span>.
+    {:else}
+      just <span class="trash">trash</span>.
+    {/if}
+  </p>
 
-{#if !fromDateIsPickupDate}
-  <p class="remind">(Today is {fromDate.format(weekdayMonthDateFormat)}.)</p>
-{/if}
+  {#if !fromDateIsPickupDate}
+    <p class="today">(Today is {fromDate.format(weekdayMonthDateFormat)}.)</p>
+  {/if}
+</div>
 
 <style>
-  :global(body) {
-    color: #18181b;
-    background-color: #fafafa;
-  }
-
   .trash {
-    color: green;
+    color: #607f35;
   }
 
   .recycling {
-    color: blue;
+    color: #2378c3;
   }
 
-  @media (prefers-color-scheme: dark) {
-    :global(body) {
-      background-color: #18181b;
-      color: #fafafa;
-    }
-
-    .trash {
-      color: #27ac29;
-    }
-
-    .recycling {
-      color: #3e92ff;
-    }
-  }
-
-  .remind {
-    font-style: italic;
-    color: #71717a;
+  .pickup {
+    font-size: 1.5rem;
   }
 </style>
