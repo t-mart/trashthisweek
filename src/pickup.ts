@@ -1,59 +1,65 @@
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone.js';
+import {
+  nextWednesday,
+  differenceInWeeks,
+  isWednesday,
+  startOfDay,
+  isSameDay,
+  format,
+  addDays,
+} from "date-fns";
 
-dayjs.extend(timezone); // gives timezone support
-
-// The timezone where our trash pickup occurs.
-dayjs.tz.setDefault('America/Chicago');
+interface Pickup {
+  date: Date;
+  isRecycling: boolean;
+  relativeText: string;
+}
 
 /**
- * Represents a trash pickup date and if that pickup has recycling.
+ * Reference date to determine the recycling-ness of other pickup dates.
  */
-export class Pickup {
-    /**
-     * Date when pickup will occur.
-    */
-    date: dayjs.Dayjs;
-    /**
-     * True if date is a recycling day.
-    */
-    isRecyclingDay: boolean;
+const KNOWN_RECYCLE_DATE = new Date("2022-08-03T00:00:00-0500");
+/**
+ * format string that produces strings like "August 3rd"
+ */
+const RELATIVE_FORMAT = "MMMM do";
 
-    /**
-     * A known trash and recycle day to use as a reference for all other pickup days.
-     */
-    private static known_trash_and_recycle_day = dayjs('2022-03-16');
+function getNextPickupDate(fromDate: Date) {
+  if (isWednesday(fromDate)) {
+    return startOfDay(fromDate);
+  }
+  return startOfDay(nextWednesday(fromDate));
+}
 
-    /**
-     * The day of the week when pickup occurs. (Zero-indexed because thats what dayjs expects)
-     */
-    private static pickupDayIndex = 3;
+function getIsRecycling(date: Date) {
+  return differenceInWeeks(KNOWN_RECYCLE_DATE, date) % 2 === 0;
+}
 
-    constructor(date: dayjs.Dayjs, isRecyclingDay: boolean) {
-        this.date = date;
-        this.isRecyclingDay = isRecyclingDay;
-    }
+// <Today, August 3rd>, is ...
+// <Tomorrow, August 3rd>, is ...
+// <Next Wednesday, August 3rd>,
+function getRelativeText(fromDate: Date, toDate: Date) {
+  const formatted = format(toDate, RELATIVE_FORMAT);
+  if (isSameDay(fromDate, toDate)) {
+    return `Today, ${formatted}`;
+  } else if (isSameDay(addDays(fromDate, 1), toDate)) {
+    return `Tomorrow, ${formatted}`;
+  }
+  return `Next ${format(toDate, "EEEE")}, ${formatted}`;
+}
 
-    /**
-     * From a given date, determine the next trash pickup date and if that pickup also has
-     * recycling. If the given date is a trash pickup date, it will be considered the next pickup
-     * date.
-     * @param fromDate An reference date to calculate the next pickup date from.
-     * @returns A Pickup object
-     */
-    static after(fromDate: dayjs.Dayjs): Pickup {
-        let nextPickupDate: dayjs.Dayjs;
-        if (fromDate.day() <= Pickup.pickupDayIndex) {
-            nextPickupDate = fromDate.day(Pickup.pickupDayIndex).startOf('day');
-        } else {
-            nextPickupDate = fromDate.add(1, 'week')
-                .day(Pickup.pickupDayIndex).startOf('day');
-        }
-
-        const weeksBetween = dayjs(nextPickupDate).diff(Pickup.known_trash_and_recycle_day, 'week');
-        const isRecyclingDay = weeksBetween % 2 === 0;
-
-        return new Pickup(nextPickupDate, isRecyclingDay);
-    }
-
+/**
+ * Returns the next pickup date if its a recycling day, and a string of words that describe the next
+ * day. If today is a pickup day, return that instead.
+ * @param fromDate The date of which to find the next pickup
+ * @returns A Pickup object
+ */
+export function getNextPickup(fromDate = new Date()): Pickup {
+  const pickupDate = getNextPickupDate(fromDate);
+  const isRecycling = getIsRecycling(pickupDate);
+  const relativeText = getRelativeText(fromDate, pickupDate);
+  return {
+    date: pickupDate,
+    isRecycling,
+    relativeText,
+  };
 }

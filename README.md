@@ -6,14 +6,14 @@ Available at <https://trashthisweek.com>.
 
 ## Developing
 
+`pnpm install`. Then:
+
 ```bash
-npm run dev
+pnpm run dev
 ```
 
-## Building
-
-To create a production version of your app:
+or
 
 ```bash
-npm run build
+pnpm run build
 ```
