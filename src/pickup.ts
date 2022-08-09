@@ -48,7 +48,7 @@ function getIsRecycling(date: Date) {
  * - "Tomorrow, August 3rd" if fromDate + 1 day is the same day
  * - "This Wednesday, August 3rd" if fromDate is in the same week as toDate (week being the period
  *   that starts 00:00 Sunday and ends 23:59 Saturday)
- * - "Next Wednesay, August 3rd" in all other cases.
+ * - "Next Wednesday, August 3rd" in all other cases.
  *
  * The difference between "This Wednesday" and "Next Wednesday" follow an idiosyncrasy of English,
  * where the meaning of "this" and "next" change depending on the instant of time in which they are
