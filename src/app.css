@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.footer-link {
+		@apply underline
+            hover:text-gray-900;
+	}
+
+	:focus-visible {
+		@apply focus-visible:outline-dotted
+        focus-visible:outline-2
+        focus-visible:outline-gray-900
+        focus-visible:outline-offset-2;
+	}
+}
