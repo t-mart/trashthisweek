@@ -4,7 +4,7 @@
 	import { DateTime } from 'luxon';
 
 	import { getDayOfMonthOrdinalSuffix } from '$lib/util';
-	import { refParameter } from '$lib/constants';
+	import { refParameter, timeZone } from '$lib/constants';
 	import Trash from './Trash.svelte';
 	import Recycling from './Recycling.svelte';
 
@@ -12,9 +12,12 @@
 
 	$: ({ ref, nextTrashDate, isRecycling } = data);
 
-	// these two use the real current time as reference! not the time passed in
-	$: relative = nextTrashDate.toRelativeCalendar({ unit: 'days' })!;
-	$: isInTheFuture = DateTime.now().startOf('day') <= nextTrashDate;
+	$: nowStartOfDay = DateTime.now().setZone(timeZone).startOf('day');
+
+	// these use the real current time as reference! not the time passed in
+	$: relative = nextTrashDate.toRelativeCalendar({ unit: 'days', base: nowStartOfDay })!;
+	$: isInTheFuture = nowStartOfDay <= nextTrashDate;
+	$: isToday = nowStartOfDay.equals(ref.startOf('day'));
 
 	$: formatted = nextTrashDate.toLocaleString({ weekday: 'long', month: 'long', day: 'numeric' });
 	$: ordinalSuffix = getDayOfMonthOrdinalSuffix(nextTrashDate.day);
@@ -55,7 +58,11 @@
 				<li><span>by Tim Martin</span></li>
 				<li><a href="https://github.com/t-mart/trashthisweek" class="footer-link">source</a></li>
 				<li><a href={apiHref} class="footer-link">API</a></li>
-				<li><a href={nextWeekHref} class="footer-link">next week, for example</a></li>
+				{#if isToday}
+					<li><a href={nextWeekHref} class="footer-link">next week, for example</a></li>
+				{:else}
+					<li><a href="/" class="footer-link text-red-700 hover:text-red-900">back to today</a></li>
+				{/if}
 			</ul>
 		</nav>
 	</footer>
