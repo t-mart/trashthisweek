@@ -1,13 +1,13 @@
 import { json } from '@sveltejs/kit';
 import { getRefFromURL } from '$lib/util';
-import { getNextTrashDate } from '$lib/nextTrashDate';
+import { getNextCollection } from '$lib/nextCollection';
 
 import type { RequestHandler } from './$types';
 
 export const GET = (({ url }) => {
 	let nextTrashDate;
 	try {
-		nextTrashDate = getNextTrashDate(getRefFromURL(url));
+		nextTrashDate = getNextCollection(getRefFromURL(url));
 	} catch (e) {
 		if (e instanceof Error) {
 			return json({ error: e.message }, { status: 400 });

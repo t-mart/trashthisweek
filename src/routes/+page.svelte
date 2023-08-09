@@ -10,17 +10,22 @@
 
 	export let data: PageData;
 
-	$: ({ ref, nextTrashDate, isRecycling } = data);
+	$: ({ ref, nextCollectionDate, nextCollectionHasRecycling } = data);
 
 	$: nowStartOfDay = DateTime.now().setZone(timeZone).startOf('day');
 
-	// these use the real current time as reference! not the time passed in
-	$: relative = nextTrashDate.toRelativeCalendar({ unit: 'days', base: nowStartOfDay })!;
-	$: isInTheFuture = nowStartOfDay <= nextTrashDate;
+	// note that, for presentation on this page, we consider the collection
+	// date to be relative to the current time right now, not the ref datetime
+	$: relative = nextCollectionDate.toRelativeCalendar({ unit: 'days', base: nowStartOfDay })!;
+	$: isOrWas = nowStartOfDay <= nextCollectionDate ? 'is' : 'was';
 	$: isToday = nowStartOfDay.equals(ref.startOf('day'));
 
-	$: formatted = nextTrashDate.toLocaleString({ weekday: 'long', month: 'long', day: 'numeric' });
-	$: ordinalSuffix = getDayOfMonthOrdinalSuffix(nextTrashDate.day);
+	$: formatted = nextCollectionDate.toLocaleString({
+		weekday: 'long',
+		month: 'long',
+		day: 'numeric'
+	});
+	$: ordinalSuffix = getDayOfMonthOrdinalSuffix(nextCollectionDate.day);
 	$: nextWeekHref = `/?${refParameter}=${ref.plus({ weeks: 1 }).toISO()}`;
 	$: apiHref = `/api/next?${refParameter}=${ref.toISO()}`;
 </script>
@@ -29,10 +34,12 @@
 	<main class="text-2xl font-semibold text-gray-800 mb-8">
 		<p class="mb-8">
 			The pickup {relative} on<br />
+
 			<span>{formatted}{ordinalSuffix},</span><br />
-			{#if isInTheFuture}is{:else}was{/if}
+
+			{isOrWas}
 			<span>
-				{#if isRecycling}
+				{#if nextCollectionHasRecycling}
 					<Trash /> and <Recycling />.
 				{:else}
 					just <Trash />.
@@ -44,7 +51,7 @@
 			<picture>
 				<img src="/trash.jpg" alt="trash bin" class="w-full h-80 object-contain" />
 			</picture>
-			{#if isRecycling}
+			{#if nextCollectionHasRecycling}
 				<picture>
 					<img src="/recycling.jpg" alt="recycling bin" class="w-full h-80 object-contain" />
 				</picture>

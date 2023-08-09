@@ -2,7 +2,7 @@ import type { PageLoad } from './$types';
 
 import { error } from '@sveltejs/kit';
 import { getRefFromURL } from '$lib/util';
-import { getNextTrashDate } from '$lib/nextTrashDate';
+import { getNextCollection } from '$lib/nextCollection';
 
 export const load = (({ url }) => {
 	let ref;
@@ -15,11 +15,11 @@ export const load = (({ url }) => {
 		throw error(400, { message: 'An unexpected error occurred' });
 	}
 
-	const nextTrashDate = getNextTrashDate(ref);
+	const nextCollection = getNextCollection(ref);
 
 	return {
 		ref,
-		nextTrashDate: nextTrashDate.nextTrashDate,
-        isRecycling: nextTrashDate.isRecycling,
+		nextCollectionDate: nextCollection.date,
+        nextCollectionHasRecycling: nextCollection.hasRecycling,
 	};
 }) satisfies PageLoad;
