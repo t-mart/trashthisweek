@@ -4,7 +4,7 @@
 	let defaultValue = DateTime.now().toISODate();
 </script>
 
-<form class="flex flex-row flex-wrap justify-center items-center gap-4 text-center">
+<form class="flex md:flex-row flex-col justify-center items-center gap-x-4 gap-y-2 text-center">
 	<label for="refDate">Or, see it for another week:</label>
 	<input
 		type="date"
