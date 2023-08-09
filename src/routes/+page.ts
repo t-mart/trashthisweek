@@ -5,9 +5,9 @@ import { getRefFromURL } from '$lib/util';
 import { getNextTrashDate } from '$lib/nextTrashDate';
 
 export const load = (({ url }) => {
-	let now;
+	let ref;
 	try {
-		now = getRefFromURL(url);
+		ref = getRefFromURL(url);
 	} catch (e) {
 		if (e instanceof Error) {
 			throw error(400, { message: e.message });
@@ -15,10 +15,10 @@ export const load = (({ url }) => {
 		throw error(400, { message: 'An unexpected error occurred' });
 	}
 
-	const nextTrashDate = getNextTrashDate(now);
+	const nextTrashDate = getNextTrashDate(ref);
 
 	return {
-		now,
+		ref,
 		nextTrashDate: nextTrashDate.nextTrashDate,
         isRecycling: nextTrashDate.isRecycling,
 	};

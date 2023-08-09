@@ -4,12 +4,13 @@
 	import { DateTime } from 'luxon';
 
 	import { getDayOfMonthOrdinalSuffix } from '$lib/util';
+	import { refParameter } from '$lib/constants';
 	import Trash from './Trash.svelte';
 	import Recycling from './Recycling.svelte';
 
 	export let data: PageData;
 
-	$: ({ now: ref, nextTrashDate, isRecycling } = data);
+	$: ({ ref, nextTrashDate, isRecycling } = data);
 
 	// these two use the real current time as reference! not the time passed in
 	$: relative = nextTrashDate.toRelativeCalendar({ unit: 'days' })!;
@@ -17,8 +18,8 @@
 
 	$: formatted = nextTrashDate.toLocaleString({ weekday: 'long', month: 'long', day: 'numeric' });
 	$: ordinalSuffix = getDayOfMonthOrdinalSuffix(nextTrashDate.day);
-	$: nextWeekHref = `/?ref=${ref.plus({ weeks: 1 }).toISO()}`;
-	$: apiHref = `/api/next?ref=${ref.toISO()}`;
+	$: nextWeekHref = `/?${refParameter}=${ref.plus({ weeks: 1 }).toISO()}`;
+	$: apiHref = `/api/next?${refParameter}=${ref.toISO()}`;
 </script>
 
 <div class="text-center my-8 max-w-prose mx-auto px-8">
