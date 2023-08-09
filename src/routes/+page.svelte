@@ -21,28 +21,26 @@
 <div class="text-center my-8 max-w-prose mx-auto px-8">
 	<main class="text-2xl font-semibold text-gray-800 mb-8">
 		<p class="mb-8">
-			The pickup {relative} on <span class="whitespace-nowrap">{formatted}{ordinalSuffix},</span>
-			{#if isInTheFuture}
-				is
-			{:else}
-				was
-			{/if}<span class="whitespace-nowrap">
+			The pickup {relative} on<br />
+			<span>{formatted}{ordinalSuffix},</span><br />
+			{#if isInTheFuture}is{:else}was{/if}
+			<span>
 				{#if isRecycling}
 					<Trash /> and <Recycling />.
 				{:else}
 					just <Trash />.
-				{/if}</span
-			>
+				{/if}
+			</span>
 		</p>
 
 		<div class="flex flex-row justify-center items-center gap-8">
 			{#if isRecycling}
 				<picture>
-					<img src="/recycling.jpg" alt="recycling bin" class="w-full max-h-[20rem]" />
+					<img src="/recycling.jpg" alt="recycling bin" class="w-full h-80 object-contain" />
 				</picture>
 			{/if}
 			<picture>
-				<img src="/trash.jpg" alt="trash bin" class="w-full max-h-[20rem]" />
+				<img src="/trash.jpg" alt="trash bin" class="w-full h-80 object-contain" />
 			</picture>
 		</div>
 	</main>
