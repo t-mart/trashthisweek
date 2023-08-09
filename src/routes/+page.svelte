@@ -25,7 +25,7 @@
 	$: apiHref = `/api/next?${refParameter}=${ref.toISO()}`;
 </script>
 
-<div class="text-center my-8 max-w-prose mx-auto px-8">
+<div class="text-center max-w-prose mx-auto p-8">
 	<main class="text-2xl font-semibold text-gray-800 mb-8">
 		<p class="mb-8">
 			The pickup {relative} on<br />
