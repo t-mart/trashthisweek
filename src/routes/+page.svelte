@@ -34,14 +34,14 @@
 		</p>
 
 		<div class="flex flex-row justify-center items-center gap-8">
+			<picture>
+				<img src="/trash.jpg" alt="trash bin" class="w-full h-80 object-contain" />
+			</picture>
 			{#if isRecycling}
 				<picture>
 					<img src="/recycling.jpg" alt="recycling bin" class="w-full h-80 object-contain" />
 				</picture>
 			{/if}
-			<picture>
-				<img src="/trash.jpg" alt="trash bin" class="w-full h-80 object-contain" />
-			</picture>
 		</div>
 	</main>
 
