@@ -18,7 +18,7 @@
 	$: apiHref = `/api/next?now=${now.toISO()}`;
 </script>
 
-<div class="text-center m-8 max-w-prose mx-auto">
+<div class="text-center my-8 max-w-prose mx-auto px-8">
 	<main class="text-2xl font-semibold text-gray-800 mb-8">
 		<p class="mb-8">
 			The pickup {relative} on {formatted}{ordinalSuffix},
