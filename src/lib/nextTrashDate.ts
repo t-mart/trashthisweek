@@ -2,8 +2,8 @@ import type { DateTime } from 'luxon';
 
 import { referenceRecyclingWeekDateTime, trashDayOfWeek } from './constants';
 
-export const getNextTrashDate = (now: DateTime): App.TrashDate => {
-	let nextTrashDate = now.startOf('day');
+export const getNextTrashDate = (ref: DateTime): App.TrashDate => {
+	let nextTrashDate = ref.startOf('day');
 	while (nextTrashDate.weekday !== trashDayOfWeek) {
 		nextTrashDate = nextTrashDate.plus({ days: 1 });
 	}

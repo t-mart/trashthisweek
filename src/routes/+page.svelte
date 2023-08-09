@@ -9,13 +9,16 @@
 
 	export let data: PageData;
 
-	$: ({ now, nextTrashDate, isRecycling } = data);
+	$: ({ now: ref, nextTrashDate, isRecycling } = data);
+
+	// these two use the real current time as reference! not the time passed in
 	$: relative = nextTrashDate.toRelativeCalendar({ unit: 'days' })!;
+	$: isInTheFuture = DateTime.now().startOf('day') <= nextTrashDate;
+
 	$: formatted = nextTrashDate.toLocaleString({ weekday: 'long', month: 'long', day: 'numeric' });
 	$: ordinalSuffix = getDayOfMonthOrdinalSuffix(nextTrashDate.day);
-	$: isInTheFuture = DateTime.now().startOf('day') <= nextTrashDate;
-	$: nextWeekHref = `/?now=${now.plus({ weeks: 1 }).toISO()}`;
-	$: apiHref = `/api/next?now=${now.toISO()}`;
+	$: nextWeekHref = `/?ref=${ref.plus({ weeks: 1 }).toISO()}`;
+	$: apiHref = `/api/next?ref=${ref.toISO()}`;
 </script>
 
 <div class="text-center my-8 max-w-prose mx-auto px-8">

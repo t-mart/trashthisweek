@@ -1,14 +1,14 @@
 import { DateTime } from 'luxon';
 
-import { timeZone } from './constants';
+import { timeZone, refParameter } from './constants';
 
-export const getNowFromParam = (url: URL) => {
-	const urlNow = url.searchParams.get('now');
+export const getRefFromURL = (url: URL) => {
+	const urlNow = url.searchParams.get(refParameter);
 	if (urlNow) {
 		const now = DateTime.fromISO(urlNow, { zone: timeZone });
 		if (now.invalidReason)
 			throw new Error(
-				`Invalid now parameter: ${urlNow}, ${now.invalidReason}, ${now.invalidExplanation}`
+				`Invalid ${refParameter} parameter: ${urlNow}, ${now.invalidReason}, ${now.invalidExplanation}`
 			);
 	}
 	const now = urlNow

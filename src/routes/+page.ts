@@ -1,13 +1,13 @@
 import type { PageLoad } from './$types';
 
 import { error } from '@sveltejs/kit';
-import { getNowFromParam } from '$lib/util';
+import { getRefFromURL } from '$lib/util';
 import { getNextTrashDate } from '$lib/nextTrashDate';
 
 export const load = (({ url }) => {
 	let now;
 	try {
-		now = getNowFromParam(url);
+		now = getRefFromURL(url);
 	} catch (e) {
 		if (e instanceof Error) {
 			throw error(400, { message: e.message });
