@@ -21,17 +21,18 @@
 <div class="text-center my-8 max-w-prose mx-auto px-8">
 	<main class="text-2xl font-semibold text-gray-800 mb-8">
 		<p class="mb-8">
-			The pickup {relative} on {formatted}{ordinalSuffix},
+			The pickup {relative} on <span class="whitespace-nowrap">{formatted}{ordinalSuffix},</span>
 			{#if isInTheFuture}
 				is
 			{:else}
 				was
-			{/if}
-			{#if isRecycling}
-				<Trash /> and <Recycling />.
-			{:else}
-				just <Trash />.
-			{/if}
+			{/if}<span class="whitespace-nowrap">
+				{#if isRecycling}
+					<Trash /> and <Recycling />.
+				{:else}
+					just <Trash />.
+				{/if}</span
+			>
 		</p>
 
 		<div class="flex flex-row justify-center items-center gap-8">
@@ -64,14 +65,14 @@
 </svelte:head>
 
 <style lang="scss">
-    footer li:not(:last-child):after {
-        content: '•';
-        margin-left: 0.5rem;
-        margin-right: 0.5rem;
-    }
+	footer li:not(:last-child):after {
+		content: '•';
+		margin-left: 0.5rem;
+		margin-right: 0.5rem;
+	}
 
-    // don't color the bullet
-    footer li:hover:after {
-        color: inherit;
-    }
+	// don't color the bullet
+	footer li:hover:after {
+		color: inherit;
+	}
 </style>
