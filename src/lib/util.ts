@@ -3,18 +3,18 @@ import { DateTime } from 'luxon';
 import { timeZone, refParameter } from './constants';
 
 export const getRefFromURL = (url: URL) => {
-	const urlNow = url.searchParams.get(refParameter);
-	if (urlNow) {
-		const now = DateTime.fromISO(urlNow, { zone: timeZone });
-		if (now.invalidReason)
+	const urlRef = url.searchParams.get(refParameter);
+	let ref;
+	if (urlRef) {
+		ref = DateTime.fromISO(urlRef, { zone: timeZone });
+		if (ref.invalidReason)
 			throw new Error(
-				`Invalid ${refParameter} parameter: ${urlNow}, ${now.invalidReason}, ${now.invalidExplanation}`
+				`Invalid ${refParameter} parameter: ${urlRef}, ${ref.invalidReason}, ${ref.invalidExplanation}`
 			);
+	} else {
+		ref = DateTime.now().setZone(timeZone);
 	}
-	const now = urlNow
-		? DateTime.fromISO(urlNow, { zone: timeZone })
-		: DateTime.now().setZone(timeZone);
-	return now;
+	return ref;
 };
 
 export const getDayOfMonthOrdinalSuffix = (n: number) => {
