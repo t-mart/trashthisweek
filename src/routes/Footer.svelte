@@ -5,9 +5,9 @@
 <footer>
     <nav class="text-gray-600">
         <ul class="flex justify-center flex-wrap">
-            <li><span>by Tim Martin</span></li>
-            <li><a href="https://github.com/t-mart/trashthisweek" class="link underline hover:text-gray-900">source</a></li>
-            <li><a href={apiHref} class="link underline hover:text-gray-900">API</a></li>
+            <li>by Tim Martin</li>
+            <li><a href="https://github.com/t-mart/trashthisweek" class="link hover:text-gray-900">source</a></li>
+            <li><a href={apiHref} class="link hover:text-gray-900">API</a></li>
         </ul>
     </nav>
 </footer>
