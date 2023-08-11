@@ -4,7 +4,7 @@
 	import { DateTime } from 'luxon';
 
 	import { getDayOfMonthOrdinalSuffix } from '$lib/util';
-	import { refParameter, timeZone } from '$lib/constants';
+	import { refParameter, baseRecyclingPickupDateTime } from '$lib/constants';
 	import Trash from './Trash.svelte';
 	import Recycling from './Recycling.svelte';
 	import RefDateForm from './RefDateForm.svelte';
@@ -14,10 +14,9 @@
 
 	$: ({ ref, nextCollectionDate, nextCollectionHasRecycling } = data);
 
-	$: nowStartOfDay = DateTime.now().setZone(timeZone).startOf('day');
-
 	// note that, for presentation on this page, we consider the collection
 	// date to be relative to the current time right now, not the ref datetime
+	$: nowStartOfDay = DateTime.now().setZone(baseRecyclingPickupDateTime.zone).startOf('day');
 	$: relative = nextCollectionDate.toRelativeCalendar({ unit: 'days', base: nowStartOfDay })!;
 	$: isOrWas = nowStartOfDay <= nextCollectionDate ? 'is' : 'was';
 

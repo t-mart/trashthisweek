@@ -1,18 +1,18 @@
 import { DateTime } from 'luxon';
 
-import { timeZone, refParameter } from './constants';
+import { refParameter, baseRecyclingPickupDateTime } from './constants';
 
 export const getRefFromURL = (url: URL) => {
 	const urlRef = url.searchParams.get(refParameter);
 	let ref;
 	if (urlRef) {
-		ref = DateTime.fromISO(urlRef, { zone: timeZone });
+		ref = DateTime.fromISO(urlRef, { zone: baseRecyclingPickupDateTime.zone });
 		if (ref.invalidReason)
 			throw new Error(
 				`Invalid ${refParameter} parameter: ${urlRef}, ${ref.invalidReason}, ${ref.invalidExplanation}`
 			);
 	} else {
-		ref = DateTime.now().setZone(timeZone);
+		ref = DateTime.now().setZone(baseRecyclingPickupDateTime.zone);
 	}
 	return ref;
 };
