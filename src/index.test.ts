@@ -15,7 +15,10 @@ expect.extend({
 		return {
 			pass:
 				equals(received.hasRecycling, expected.hasRecycling) && received.date.equals(expected.date),
-			message: () => `expected ${received} ${isNot ? 'not ' : ''}to match ${expected}`,
+			message: () =>
+				`expected ${JSON.stringify(received)} ${isNot ? 'not ' : ''}to match ${JSON.stringify(
+					expected
+				)}`,
 			actual: received,
 			expected
 		};
@@ -61,12 +64,17 @@ describe('getNextCollection', () => {
 
 	test('skips Thanksgiving', () => {
 		// artificially say that the base pickup day is Thursday, the only day on which Thanksgiving can fall
-		const baseRecyclingPickupDateTime = DateTime.fromISO('2023-11-23T00:00:00.000', {
+		const baseRecyclingPickupDateTime = DateTime.fromISO('2023-11-16T00:00:00.000', {
 			zone: 'America/Chicago'
 		});
-		const ref = baseRecyclingPickupDateTime.minus({ days: 1 });
-		const nextCollection = getNextCollection(ref, baseRecyclingPickupDateTime);
-		expect(nextCollection.date.toISODate()).toBe('2023-11-24');
+		const ref = DateTime.fromISO('2023-11-22T00:00:00.000', {
+			zone: 'America/Chicago'
+		});
+		// thanksgiving is 23rd in 2023, which is a Thursday, so should be skipped
+		expect(getNextCollection(ref, baseRecyclingPickupDateTime)).toMatchCollectionPickup({
+			date: ref.plus({ days: 2 }),
+			hasRecycling: false
+		});
 	});
 
 	test('skips Christmas', () => {
@@ -75,8 +83,10 @@ describe('getNextCollection', () => {
 			zone: 'America/Chicago'
 		});
 		const baseRecyclingPickupDateTime = BASE_RECYCLING_PICKUP_DATE_TIME;
-		const nextCollection = getNextCollection(ref, baseRecyclingPickupDateTime);
-		expect(nextCollection.date.toISODate()).toBe('2024-12-26');
+		expect(getNextCollection(ref, baseRecyclingPickupDateTime)).toMatchCollectionPickup({
+			date: ref.plus({ days: 3 }),
+			hasRecycling: false
+		});
 	});
 
 	test("skips New Year's", () => {
@@ -85,16 +95,38 @@ describe('getNextCollection', () => {
 			zone: 'America/Chicago'
 		});
 		const baseRecyclingPickupDateTime = BASE_RECYCLING_PICKUP_DATE_TIME;
-		const nextCollection = getNextCollection(ref, baseRecyclingPickupDateTime);
-		expect(nextCollection.date.toISODate()).toBe('2025-01-02');
+		expect(getNextCollection(ref, baseRecyclingPickupDateTime)).toMatchCollectionPickup({
+			date: ref.plus({ days: 4 }),
+			hasRecycling: true
+		});
 	});
 
 	test("day after skip is a pickup day", () => {
-		const ref = DateTime.fromISO('2024-12-26T00:00:00.000', {
+		// in 2024, with a standard wednesday pickup, New Year's is on a Wednesday, which should be skipped
+		const ref = DateTime.fromISO('2025-01-02T00:00:00.000', {
 			zone: 'America/Chicago'
 		});
 		const baseRecyclingPickupDateTime = BASE_RECYCLING_PICKUP_DATE_TIME;
-		const nextCollection = getNextCollection(ref, baseRecyclingPickupDateTime);
-		expect(nextCollection.date.toISODate()).toBe('2024-12-26');
+		expect(getNextCollection(ref, baseRecyclingPickupDateTime)).toMatchCollectionPickup({
+			date: ref,
+			hasRecycling: true
+		});
+
+		// double check that the day before had same recycling status
+		expect(
+			getNextCollection(ref.minus({ days: 1 }), baseRecyclingPickupDateTime)
+		).toMatchCollectionPickup({
+			date: ref,
+			hasRecycling: true
+		});
+
+		// double check that the day after has opposite recycling status and proper collection date
+		expect(
+			getNextCollection(ref.plus({ days: 1 }), baseRecyclingPickupDateTime)
+		).toMatchCollectionPickup({
+			date: ref.plus({ days: 6 }),
+			hasRecycling: false
+		});
 	});
+
 });
