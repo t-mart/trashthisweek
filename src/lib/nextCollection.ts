@@ -5,19 +5,21 @@ export const getNextCollection = (
 	baseRecyclingPickupDateTime: DateTime
 ): PickupCollection => {
 	let nextCollectionDate = ref.setZone(baseRecyclingPickupDateTime.zone).startOf('day');
-	while (nextCollectionDate.weekday !== baseRecyclingPickupDateTime.weekday) {
-		nextCollectionDate = nextCollectionDate.plus({ days: 1 });
+
+	const yesterdayWasSkipped = isSkipHoliday(nextCollectionDate.minus({ days: 1 }));
+
+	if (!yesterdayWasSkipped) {
+		while (nextCollectionDate.weekday !== baseRecyclingPickupDateTime.weekday) {
+			nextCollectionDate = nextCollectionDate.plus({ days: 1 });
+		}
 	}
+	
 	nextCollectionDate = nextCollectionDate.startOf('day');
 
 	const weekDiff = baseRecyclingPickupDateTime.diff(nextCollectionDate, 'weeks').weeks;
 	const hasRecycling = weekDiff % 2 === 0;
 
-	if (
-		isThanksgiving(nextCollectionDate) ||
-		isChristmas(nextCollectionDate) ||
-		isNewYears(nextCollectionDate)
-	) {
+	if (isSkipHoliday(nextCollectionDate)) {
 		nextCollectionDate = nextCollectionDate.plus({ days: 1 });
 	}
 
@@ -43,4 +45,8 @@ const isNewYears = (date: DateTime) => {
 	const month = date.month,
 		day = date.day;
 	return month === 1 && day === 1;
+};
+
+const isSkipHoliday = (date: DateTime) => {
+	return isThanksgiving(date) || isChristmas(date) || isNewYears(date);
 };

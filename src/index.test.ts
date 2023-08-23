@@ -75,7 +75,7 @@ describe('getNextCollection', () => {
 			zone: 'America/Chicago'
 		});
 		const baseRecyclingPickupDateTime = BASE_RECYCLING_PICKUP_DATE_TIME;
-		const nextCollection = getNextCollection(ref, BASE_RECYCLING_PICKUP_DATE_TIME);
+		const nextCollection = getNextCollection(ref, baseRecyclingPickupDateTime);
 		expect(nextCollection.date.toISODate()).toBe('2024-12-26');
 	});
 
@@ -85,7 +85,16 @@ describe('getNextCollection', () => {
 			zone: 'America/Chicago'
 		});
 		const baseRecyclingPickupDateTime = BASE_RECYCLING_PICKUP_DATE_TIME;
-		const nextCollection = getNextCollection(ref, BASE_RECYCLING_PICKUP_DATE_TIME);
+		const nextCollection = getNextCollection(ref, baseRecyclingPickupDateTime);
 		expect(nextCollection.date.toISODate()).toBe('2025-01-02');
+	});
+
+	test("day after skip is a pickup day", () => {
+		const ref = DateTime.fromISO('2024-12-26T00:00:00.000', {
+			zone: 'America/Chicago'
+		});
+		const baseRecyclingPickupDateTime = BASE_RECYCLING_PICKUP_DATE_TIME;
+		const nextCollection = getNextCollection(ref, baseRecyclingPickupDateTime);
+		expect(nextCollection.date.toISODate()).toBe('2024-12-26');
 	});
 });
