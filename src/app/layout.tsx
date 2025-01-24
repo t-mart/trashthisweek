@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Plausible from "@/components/plausible";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -28,6 +29,7 @@ export default function RootLayout({
         // className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-prose mx-auto p-8`}
         className={`antialiased max-w-prose mx-auto p-8`}
       >
+        <Plausible />
         <header>
           <h1 className="text-center mb-12 text-xl font-light">
             Trash This Week
