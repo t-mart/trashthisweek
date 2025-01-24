@@ -1,43 +1,36 @@
-# trashthisweek
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Answers the question, "Is it just trash or recycling too this week?".
+## Getting Started
 
-Deployed to <https://trashthisweek.com>.
+First, run the development server:
 
-## `ref` Parameter
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-By using the optional `ref` query parameter, you can time-travel back and
-forward to see the next collection that would occur on/after that time.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-The value for the parameter must be ISO-8601 date or datetime string, with an
-optional timezone indicator. If no timezone is provided, `America/Chicago` will
-be used.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-If the passed in string cannot be parsed, an error will be shown.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-Examples:
+## Learn More
 
-- <https://trashthisweek.com?ref=2038-01-19T03:14:08-05:00> Full form
-- <https://trashthisweek.com?ref=2038-01-19T03:14:08> No time zone, so `America/Chicago` assumed
-- <https://trashthisweek.com?ref=2038-01-19T03:14:08Z> Different timezone, but will be converted
-- <https://trashthisweek.com?ref=2038-01-19> No time required
-- <https://trashthisweek.com?ref=malformed> Malformed
+To learn more about Next.js, take a look at the following resources:
 
-## API
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-### `/api/next`
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-Responds in JSON with an object containing the following properties:
+## Deploy on Vercel
 
-- `date`, string, an ISO-8601 datetime string for the start of the date of the next collection.
-- `hasRecycling`, boolean, `true` iff the collection will also be picking up recycling.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-This endpoint also optionally accepts the [`ref` parameter](#ref-parameter).
-
-Examples:
-
-- <https://trashthisweek.com/api/next?ref=2038-01-19T03:14:08-05:00>
-- <https://trashthisweek.com/api/next?ref=2038-01-19T03:14:08>
-- <https://trashthisweek.com/api/next?ref=2038-01-19T03:14:08Z>
-- <https://trashthisweek.com/api/next?ref=2038-01-19>
-- <https://trashthisweek.com/api/next?ref=malformed>
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

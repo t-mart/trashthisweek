@@ -1,1 +1,0 @@
-<span class="text-blue-700">recycling</span>
