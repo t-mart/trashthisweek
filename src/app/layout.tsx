@@ -1,17 +1,6 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Plausible from "@/components/Plausible";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 export const metadata: Metadata = {
   title: "Trash This Week",
@@ -25,13 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-prose mx-auto p-8`}
-        className={`antialiased max-w-prose mx-auto p-8`}
-      >
+      <body className={`antialiased max-w-prose mx-auto p-8`}>
         <Plausible />
-        <header>
-          <h1 className="text-center mb-12 text-xl tracking-tight">
+        <header className="mb-12">
+          <h1 className="text-center text-xl tracking-tight">
             Trash This Week
           </h1>
           <p>{process.env.NEXT_PUBLIC_FOO ?? "dunno"}</p>
