@@ -20,7 +20,6 @@ export default function RootLayout({
           <h1 className="text-center text-xl tracking-tight">
             Trash This Week
           </h1>
-          <p>{process.env.NEXT_PUBLIC_FOO ?? "dunno"}</p>
         </header>
         <main>{children}</main>
         <footer className="mt-16">
