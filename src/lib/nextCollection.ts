@@ -46,6 +46,9 @@ export type Collection = {
 };
 
 function withRecycling(date: Temporal.PlainDate) {
+  // this was a bug fix. the `total` call below would error if the date was
+  // equal to the reference date. this might go away in the real Temporal
+  // implementation.
   if (date.equals(recyclingReferenceDate)) {
     return true;
   }
