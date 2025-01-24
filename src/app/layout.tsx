@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <Plausible />
         <header>
-          <h1 className="text-center mb-12 text-xl font-light">
+          <h1 className="text-center mb-12 text-xl tracking-tight">
             Trash This Week
           </h1>
         </header>

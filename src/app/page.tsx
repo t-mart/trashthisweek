@@ -7,10 +7,20 @@ import QueryError from "@/components/QueryError";
 import { Temporal } from "temporal-polyfill";
 import { formatDate } from "@/lib/format";
 import BinImage from "@/components/BinImage";
+import React from "react";
 
-const Trash = () => <span className="text-trash font-black">trash</span>;
+const BinText = ({ children }: Readonly<{ children: React.ReactNode }>) => (
+  <span className="underline">{children}</span>
+);
+const Trash = () => (
+  <BinText>
+    <span className="text-trash">trash</span>
+  </BinText>
+);
 const Recycling = () => (
-  <span className="text-recycling font-black">recycling</span>
+  <BinText>
+    <span className="text-recycling">recycling</span>
+  </BinText>
 );
 
 function CollectionText({
@@ -90,7 +100,7 @@ export default async function Home({
   return (
     <>
       <div className="@container">
-        <h2 className="text-2xl/12 @sm:text-3xl/16 font-bold text-center">
+        <h2 className="text-[clamp(1rem,_7cqi,_3rem)]/[clamp(2rem,_12cqi,_4rem)] font-bold text-center">
           <CollectionText collection={nextCollection} />
         </h2>
       </div>
