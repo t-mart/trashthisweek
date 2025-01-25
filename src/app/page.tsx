@@ -55,7 +55,7 @@ function CollectionText({
       <>
         The next collection on
         <br />
-        {formatDate(collectionDate)} is
+        {formatDate(collectionDate)}, is
         <br />
         {binMarkup}.
       </>
