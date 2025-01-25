@@ -55,7 +55,8 @@ function collectionHasRecycling(date: Temporal.PlainDate) {
   const diff = recyclingReferenceDate.until(date);
 
   // this was a bug. the `total` call below would error if the duration was
-  // blank/zero. (this itself might be a bug in the temporal polyfill?)
+  // blank/zero. (this itself might be a bug in the temporal polyfill? see
+  // https://github.com/fullcalendar/temporal-polyfill/issues/55)
   if (diff.blank) {
     return true;
   }
