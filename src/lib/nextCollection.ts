@@ -18,7 +18,8 @@ const recyclingReferenceDate = Temporal.PlainDate.from({
 });
 
 // this will actually never be a collection day in my community, but just for
-// completeness according to our collector's policy
+// completeness according to policy:
+// https://www.pflugervilletx.gov/791/Trash-Pickup-Schedule
 function isThanksgiving(date: Temporal.PlainDate) {
   // Thanksgiving is the fourth Thursday in November
   const month = date.month,
