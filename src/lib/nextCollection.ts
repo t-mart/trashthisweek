@@ -46,22 +46,23 @@ export type Collection = {
   withRecycling: boolean;
 };
 
-function withRecycling(date: Temporal.PlainDate) {
-  // this was a bug fix. the `total` call below would error if the date was
-  // equal to the reference date. this might go away in the real Temporal
-  // implementation.
-  if (date.equals(recyclingReferenceDate)) {
+function collectionHasRecycling(date: Temporal.PlainDate) {
+  // safety check for me
+  if (date.dayOfWeek !== collectionDayOfWeek) {
+    throw new RangeError("date should be a collection day");
+  }
+
+  const diff = recyclingReferenceDate.until(date);
+
+  // this was a bug. the `total` call below would error if the duration was
+  // blank/zero. (this itself might be a bug in the temporal polyfill?)
+  if (diff.blank) {
     return true;
   }
 
-  const diff = date.until(recyclingReferenceDate, {
-    smallestUnit: "week",
-    largestUnit: "week",
-    roundingMode: "expand", // round away from zero
-  });
   const diffWeeks = diff.total({
     unit: "week",
-    relativeTo: recyclingReferenceDate,
+    relativeTo: date,
   });
 
   return diffWeeks % 2 === 0;
@@ -72,7 +73,7 @@ export function getNextCollection(query: Temporal.PlainDate): Collection {
   if (isHoliday(yesterday) && yesterday.dayOfWeek === collectionDayOfWeek) {
     return {
       date: query,
-      withRecycling: withRecycling(yesterday),
+      withRecycling: collectionHasRecycling(yesterday),
     };
   }
 
@@ -80,13 +81,17 @@ export function getNextCollection(query: Temporal.PlainDate): Collection {
   const daysUntil = (((collectionDayOfWeek - query.dayOfWeek) % 7) + 7) % 7;
   let nextCollectionDay = query.add({ days: daysUntil });
 
-  // bump to next day if it's a holiday
+  // determine recycling now (an integral number of weeks), before possibly
+  // bumping from holiday
+  const withRecycling = collectionHasRecycling(nextCollectionDay);
+
+  // bump if needed
   if (isHoliday(nextCollectionDay)) {
     nextCollectionDay = nextCollectionDay.add({ days: 1 });
   }
 
   return {
     date: nextCollectionDay,
-    withRecycling: withRecycling(nextCollectionDay),
+    withRecycling,
   };
 }

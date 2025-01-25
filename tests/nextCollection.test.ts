@@ -3,7 +3,7 @@ import { getNextCollection, type Collection } from "@/lib/nextCollection";
 import { Temporal } from "temporal-polyfill";
 
 type Fixture = {
-  now?: Temporal.PlainDate;
+  now: Temporal.PlainDate;
   expected: Collection;
 };
 
@@ -208,6 +208,15 @@ test.for<Fixture>([
     expected: {
       date: pd("2025-01-15"),
       withRecycling: true,
+    },
+  },
+
+  // arbitrary date before reference
+  {
+    now: pd("2024-09-14"),
+    expected: {
+      date: pd("2024-09-18"),
+      withRecycling: false,
     },
   },
 ])("getNextCollection($now) -> $expected", ({ now, expected }) => {
