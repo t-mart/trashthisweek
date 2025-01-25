@@ -1,12 +1,13 @@
 import { Temporal } from "temporal-polyfill";
 
-export function formatDate(date: Temporal.PlainDate) {
+export function formatDate(date: Temporal.PlainDate, includeYear = false) {
   const dayOfWeek = date.toLocaleString(undefined, { weekday: "long" });
   const month = date.toLocaleString(undefined, { month: "long" });
   const day = date.toLocaleString(undefined, { day: "numeric" });
   const ordinalSuffix = getOrdinalSuffix(date.day);
+  const year = date.toLocaleString(undefined, { year: "numeric" });
 
-  return `${dayOfWeek}, ${month} ${day}${ordinalSuffix}`;
+  return `${dayOfWeek}, ${month} ${day}${ordinalSuffix}${includeYear ? `, ${year}` : ""}`;
 }
 
 const ordinalSuffixes = [

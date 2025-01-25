@@ -66,9 +66,7 @@ function withRecycling(date: Temporal.PlainDate) {
   return diffWeeks % 2 === 0;
 }
 
-export function getNextCollection(query?: Temporal.PlainDate): Collection {
-  query = query ?? dateInPflugerville();
-
+export function getNextCollection(query: Temporal.PlainDate): Collection {
   const yesterday = query.add({ days: -1 });
   if (isHoliday(yesterday) && yesterday.dayOfWeek === collectionDayOfWeek) {
     return {
@@ -77,18 +75,9 @@ export function getNextCollection(query?: Temporal.PlainDate): Collection {
     };
   }
 
-  let nextCollectionDay = query;
-  for (let daysOffset = 0; daysOffset < 7; daysOffset++) {
-    if (nextCollectionDay.dayOfWeek === collectionDayOfWeek) {
-      break;
-    }
-    nextCollectionDay = nextCollectionDay.add({ days: 1 });
-  }
-
-  // crazy, but just in case
-  if (nextCollectionDay.dayOfWeek !== collectionDayOfWeek) {
-    throw new Error("Could not find next collection day");
-  }
+  // positive modulo formula
+  const daysUntil = (((collectionDayOfWeek - query.dayOfWeek) % 7) + 7) % 7;
+  let nextCollectionDay = query.add({ days: daysUntil });
 
   // bump to next day if it's a holiday
   if (isHoliday(nextCollectionDay)) {

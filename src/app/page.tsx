@@ -3,7 +3,7 @@ import {
   type Collection,
   dateInPflugerville,
 } from "@/lib/nextCollection";
-import QueryError from "@/components/QueryError";
+import ParamDateError from "@/components/ParamDateError";
 import { Temporal } from "temporal-polyfill";
 import { formatDate } from "@/lib/format";
 import BinImage from "@/components/BinImage";
@@ -25,8 +25,10 @@ const Recycling = () => (
 
 function CollectionText({
   collection: { date: collectionDate, withRecycling },
+  nowDate,
 }: {
   collection: Collection;
+  nowDate: Temporal.PlainDate;
 }) {
   const binMarkup = withRecycling ? (
     <>
@@ -38,8 +40,7 @@ function CollectionText({
     </>
   );
 
-  const now = dateInPflugerville();
-  const diffDays = now.until(collectionDate).total({ unit: "days" });
+  const diffDays = nowDate.until(collectionDate).total({ unit: "days" });
 
   if (diffDays === 0 || diffDays === 1) {
     const todayOrTomorrow = diffDays === 0 ? "today" : "tomorrow";
@@ -76,32 +77,48 @@ function BinImages({
   );
 }
 
+function getParamDate(value: string | string[] | undefined) {
+  if (typeof value === "object") {
+    // supposedly, this is safe because the only way this form would occur is if
+    // the search param is provided multiple times, so there must be at least
+    // one value.
+    value = value[value.length - 1]!;
+  }
+
+  if (value === undefined) {
+    return { date: undefined, error: undefined };
+  }
+
+  try {
+    return { date: Temporal.PlainDate.from(value), error: undefined };
+  } catch (e) {
+    return { date: undefined, error: e };
+  }
+}
+
 export default async function Home({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  let queryStr = (await searchParams).query;
+  const { now } = await searchParams;
 
-  if (typeof queryStr === "object") {
-    queryStr = queryStr[queryStr.length - 1] ?? "";
+  const nowParamDate = getParamDate(now);
+  let { date: nowDate } = nowParamDate;
+  const { error: nowError } = nowParamDate;
+  if (nowError) {
+    return <ParamDateError value={now} name="now" error={nowError} />;
+  }
+  if (nowDate === undefined) {
+    nowDate = dateInPflugerville();
   }
 
-  let queryDate;
-  if (queryStr !== undefined) {
-    try {
-      queryDate = Temporal.PlainDate.from(queryStr);
-    } catch (e) {
-      return <QueryError queryStr={queryStr} error={e} />;
-    }
-  }
-
-  const nextCollection = getNextCollection(queryDate);
+  const nextCollection = getNextCollection(nowDate);
   return (
     <>
       <div className="@container">
         <h2 className="text-[clamp(1rem,_7cqi,_3rem)]/[clamp(2rem,_12cqi,_4rem)] font-bold text-center">
-          <CollectionText collection={nextCollection} />
+          <CollectionText collection={nextCollection} nowDate={nowDate} />
         </h2>
       </div>
       <div className="mt-8">
