@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2024",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "verbatimModuleSyntax": true,
     "allowJs": true,
+    "moduleDetection": "force",
     "skipLibCheck": true,
     "strict": true,
+    "noUncheckedIndexedAccess": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -19,9 +22,15 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "vitest.config.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "vitest.config.ts"
+  ],
   "exclude": ["node_modules"]
 }

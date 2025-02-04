@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest"
+    "test": "vitest",
+    "analyze": "cross-env ANALYZE=true npm run build",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.0.0",
@@ -20,9 +22,11 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.1.6",
     "@types/node": "^22.13.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cross-env": "^7.0.3",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "typescript": "^5",
