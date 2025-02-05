@@ -4,7 +4,12 @@ export default function BinText({
   withRecycling,
 }: Readonly<{ withRecycling: boolean }>) {
   if (!withRecycling) {
-    return <BinName binType="trash" />;
+    return (
+      <>
+        just
+        <BinName binType="trash" />
+      </>
+    );
   }
 
   return (
