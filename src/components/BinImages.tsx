@@ -1,4 +1,4 @@
-const className = "w-full";
+const className = "w-full rounded-lg shadow-lg";
 
 function Trash() {
   return <img src="/trash.webp" alt="Trash bin" className={className} />;
