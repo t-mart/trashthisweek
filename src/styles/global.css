@@ -18,4 +18,6 @@
 
   --color-recycling: light-dark(var(--color-blue-600), var(--color-blue-500));
   --color-trash: light-dark(var(--color-green-600), var(--color-green-500));
+
+  --color-destructive: light-dark(var(--color-red-600), var(--color-red-500));
 }

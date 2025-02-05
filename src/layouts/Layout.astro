@@ -1,0 +1,40 @@
+---
+import "../styles/global.css";
+import { PLAUSIBLE_DOMAIN, PLAUSIBLE_SRC } from "astro:env/server";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Trash This Week</title>
+    <meta
+      name="description"
+      content="Figure out if its recycling or just trash this week."
+    />
+    <script defer data-domain={PLAUSIBLE_DOMAIN} src={PLAUSIBLE_SRC}></script>
+  </head>
+  <body class="max-w-prose mx-auto p-8">
+    <header class="mb-12">
+      <h1 class="text-center text-xl tracking-tight">Trash This Week</h1>
+    </header>
+    <main><slot /></main>
+    <footer class="mt-16">
+      <p
+        class="flex flex-row flex-wrap gap-2 text-muted-foreground justify-center text-center"
+      >
+        <span>Tim Martin</span>
+        <span class="select-none">•</span>
+        <a
+          class="hover:underline"
+          href="https://github.com/t-mart/trashthisweek"
+        >
+          Source Code
+        </a>
+      </p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+---
+import { getNow } from "../lib/getNow";
+import Layout from "../layouts/Layout.astro";
+import DateParamError from "../components/NowParamError";
+import Main from "../components/Main";
+
+export const prerender = false;
+
+const nowParam = Astro.url.searchParams.get("now");
+const { date: nowDate, error: nowError } = getNow(nowParam);
+
+if (nowError) {
+  Astro.response.status = 400;
+  Astro.response.statusText = "Invalid now parameter";
+}
+---
+
+<Layout>
+  {
+    nowError ? (
+      <DateParamError value={nowParam} error={nowError} />
+    ) : (
+      <Main now={nowDate} />
+    )
+  }
+</Layout>
