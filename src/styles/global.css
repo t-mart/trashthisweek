@@ -2,13 +2,18 @@
 
 :root {
   color-scheme: light dark;
-  @apply antialiased bg-background text-foreground;
+  @apply antialiased bg-background text-foreground selection:bg-selection-background;
 }
 
 @theme inline {
   --color-background: light-dark(var(--color-zinc-100), var(--color-zinc-900));
 
   --color-foreground: light-dark(var(--color-zinc-900), var(--color-zinc-100));
+
+  --color-selection-background: light-dark(
+    var(--color-green-300),
+    var(--color-green-900)
+  );
 
   --color-muted: light-dark(var(--color-zinc-100), var(--color-zinc-800));
   --color-muted-foreground: light-dark(
