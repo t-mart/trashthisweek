@@ -6,7 +6,7 @@ export default function BinText({
   if (!withRecycling) {
     return (
       <>
-        just
+        just{" "}
         <BinName binType="trash" />
       </>
     );
