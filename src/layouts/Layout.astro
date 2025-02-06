@@ -15,7 +15,7 @@ import { PLAUSIBLE_DOMAIN, PLAUSIBLE_SRC } from "astro:env/server";
       name="description"
       content="Figure out if its recycling or just trash this week."
     />
-    <script defer data-domain={PLAUSIBLE_DOMAIN} src={PLAUSIBLE_SRC}></script>
+    <script is:inline defer data-domain={PLAUSIBLE_DOMAIN} src={PLAUSIBLE_SRC}></script>
   </head>
   <body class="max-w-prose mx-auto p-8">
     <header class="mb-12">
