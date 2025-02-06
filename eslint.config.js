@@ -9,7 +9,7 @@ import eslintPluginAstro from "eslint-plugin-astro";
 export default [
   { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
   { languageOptions: { globals: globals.browser } },
-  { ignores: ["dist", ".vercel", ".astro"] },
+  { ignores: ["dist", ".vercel", ".astro", "vitest.config.js"] },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   {

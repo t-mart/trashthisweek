@@ -1,7 +1,7 @@
 import BinText from "./BinText";
-import type { Collection } from "../lib/nextCollection";
+import type { Collection } from "@lib/nextCollection";
 import { Temporal } from "temporal-polyfill";
-import { formatDate } from "../lib/format";
+import { formatDate } from "@lib/format";
 
 export function CollectionText({
   collection: { date: collectionDate, withRecycling },

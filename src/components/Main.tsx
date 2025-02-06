@@ -1,5 +1,5 @@
 import { Temporal } from "temporal-polyfill";
-import { getNextCollection } from "../lib/nextCollection";
+import { getNextCollection } from "@lib/nextCollection";
 import { CollectionText } from "./CollectionText";
 import BinImages from "./BinImages";
 

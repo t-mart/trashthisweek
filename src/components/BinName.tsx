@@ -1,4 +1,4 @@
-import type { BinType } from "../lib/binType";
+import type { BinType } from "@lib/binType";
 
 const className = "underline decoration-foreground";
 
