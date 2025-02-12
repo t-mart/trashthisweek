@@ -1,4 +1,4 @@
-const className = "w-full rounded-lg shadow-lg";
+const className = "rounded-lg shadow-lg";
 const height = 664;
 const width = 500;
 
@@ -32,7 +32,7 @@ export default function BinImages({
   withRecycling: boolean;
 }) {
   return (
-    <div className="flex justify-center gap-4">
+    <div className="flex justify-center gap-4 mx-auto">
       <Trash />
       {withRecycling && <Recycling />}
     </div>

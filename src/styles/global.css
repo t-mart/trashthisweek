@@ -5,6 +5,13 @@
   @apply antialiased bg-background text-foreground selection:bg-selection-background;
 }
 
+* {
+  /* This shatters my world view, but it makes the images not overflow their
+  flex container, and it probably good in general.
+  https://www.youtube.com/watch?v=cH8VbLM1958 */
+  @apply min-w-0 break-words;
+}
+
 @theme inline {
   --color-background: light-dark(var(--color-zinc-100), var(--color-zinc-900));
 

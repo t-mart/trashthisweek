@@ -15,13 +15,14 @@ import { PLAUSIBLE_DOMAIN, PLAUSIBLE_SRC } from "astro:env/server";
       name="description"
       content="Figure out if its recycling or just trash this week."
     />
-    <script is:inline defer data-domain={PLAUSIBLE_DOMAIN} src={PLAUSIBLE_SRC}></script>
+    <script is:inline defer data-domain={PLAUSIBLE_DOMAIN} src={PLAUSIBLE_SRC}
+    ></script>
   </head>
-  <body class="max-w-prose mx-auto p-8">
+  <body class="max-w-[600px] mx-auto p-8">
     <header class="mb-12">
       <h1 class="text-center text-xl tracking-tight">Trash This Week</h1>
     </header>
-    <main><slot /></main>
+    <slot />
     <footer class="mt-16">
       <p
         class="flex flex-row flex-wrap gap-2 text-muted-foreground justify-center text-center"
