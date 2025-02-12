@@ -1,12 +1,28 @@
 const className = "w-full rounded-lg shadow-lg";
+const height = 664;
+const width = 500;
 
 function Trash() {
-  return <img src="/trash.webp" alt="Trash bin" className={className} />;
+  return (
+    <img
+      src="/trash.webp"
+      alt="Trash bin"
+      height={height}
+      width={width}
+      className={className}
+    />
+  );
 }
 
 function Recycling() {
   return (
-    <img src="/recycling.webp" alt="Recycling bin" className={className} />
+    <img
+      src="/recycling.webp"
+      alt="Recycling bin"
+      height={height}
+      width={width}
+      className={className}
+    />
   );
 }
 
